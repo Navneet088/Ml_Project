@@ -9,7 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.ensemble import RandomForestRegressor
 
-MODEL_FILE = "model.pkl"
+MODEL_FILE = "model_compressed.pkl"  # Always use compressed model  
 PIPELINE_FILE = 'pipeline.pkl'
 
 def build_pipeline(num_attribs, cat_attribs):
@@ -59,9 +59,11 @@ if not os.path.exists(MODEL_FILE):
     model = RandomForestRegressor(random_state=42)
     model.fit(housing_prepared, housing_labels)
 
-    joblib.dump(model, MODEL_FILE)
+    # Save model with high compression to reduce file size
+    joblib.dump(model, MODEL_FILE, compress=9)
     joblib.dump(pipeline, PIPELINE_FILE)
-    print("Model is trained. Congrats!")
+    print("Model is trained and saved as 'model_compressed.pkl' with high compression. Congrats!")
+
 else:
     # Lets do inference
     model = joblib.load(MODEL_FILE)
@@ -87,4 +89,6 @@ else:
 
     input_data.to_csv("output.csv", index=False)
     print("Inference is complete, results saved to output.csv Enjoy!")
+
+
    
