@@ -1,0 +1,3 @@
+# Ignore large model files
+House_Price_Prediction/model.pkl
+House_Price_Prediction/model_compressed.pkl
